@@ -15,9 +15,15 @@ Window {
         source: "./assets/fonts/ClashDisplay-Variable.ttf"
     }
 
+
     property int speed: 20
     property string gear: "D"
 
+    
+    Background {
+      anchors.fill: parent
+      topColor: "#ffffff"
+    }
     Row {
         spacing: 32
         anchors.centerIn: parent
