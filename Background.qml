@@ -4,8 +4,8 @@ Rectangle {
     id: root
 
     property color topColor: "#ff7e5f"
-    property color midColor: "#feb47b"
-    property color bottomColor: "#87a8e7"
+    property color midColor: "#ffffff"
+    property color bottomColor: "#ff7e5f"
 
     gradient: Gradient {
         orientation: Gradient.Vertical

@@ -2,13 +2,15 @@
 #define CLUSTERDATA_H
 
 #include <QObject>
+#include <QQmlEngine>
 #include <QString>
 class ClusterData : public QObject {
   Q_OBJECT
 
   Q_PROPERTY(GearType gear READ gear WRITE setGear NOTIFY gearChanged);
   Q_PROPERTY(int speed READ speed WRITE setSpeed NOTIFY speedChanged);
-
+  Q_PROPERTY(int miles READ miles WRITE setMiles NOTIFY milesChanged);
+  QML_ELEMENT;
 public:
   enum GearType : int {
     GearParking,
@@ -27,15 +29,19 @@ public:
   int speed() const;
   void setSpeed(const int &speed);
   
+  int miles() const;
+  void setMiles(const int &miles);
   void resetData();
 
 signals:
   void gearChanged();
   void speedChanged();
+  void milesChanged();
 
 
 private:
   int m_speed = 0;
+  int m_miles = 400;
   GearType m_gear = GearParking;
 };
 
