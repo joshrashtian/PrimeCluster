@@ -3,8 +3,8 @@ import Cluster
 
 Item {
     id: header
-
     required property ClusterData cluster
+
     property string fontFamily
     property string rangeFontFamily
 
@@ -13,7 +13,7 @@ Item {
     Row {
         id: gears
         anchors.left: parent.left
-        spacing: 8
+        spacing: 1
 
         Repeater {
             model: [

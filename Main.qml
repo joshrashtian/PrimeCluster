@@ -47,15 +47,21 @@ Window {
     }
 
     property int index: 0
+
+    // all the different pages
     Loader {
         active: index === 0
-        sourceComponent: Music {}
+        sourceComponent: Speedometer {
+            fontFamily: nippo.font.family
+            cluster: root.cluster
+        }
+
+        anchors.centerIn: parent
     }
 
-    Speedometer {
-        cluster: root.cluster
-        anchors.centerIn: parent
-        fontFamily: nippo.font.family
+    Loader {
+        active: index === 1
+        sourceComponent: Music {}
     }
 
     Rectangle {
@@ -66,5 +72,16 @@ Window {
         width: 840
         height: 5
         color: "royalblue"
-    }
+      }
+
+      ButtonSelect {
+        
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+        anchors.horizontalCenter: parent.horizontalCenter
+        tabs: ["Drive", "Music"]
+        currentIndex: root.index
+        fontFamily: dmsans.font.family
+        onSelected: (i) => root.index = i
+      }
 }
