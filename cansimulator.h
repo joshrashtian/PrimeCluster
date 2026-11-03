@@ -1,8 +1,8 @@
 #ifndef CANSIMULATOR_H
 #define CANSIMULATOR_H
 
-#include <QObject>
 #include <QCanBusDevice>
+#include <QObject>
 #include <QTimer>
 
 class CanSimulator : public QObject {
@@ -10,13 +10,16 @@ class CanSimulator : public QObject {
 
 public:
   explicit CanSimulator(QObject *parent = nullptr);
+  bool start(const QString &serialbus, const QString &interface);
 
-  private slots:
-    void tick();
+private slots:
+  void tick();
 
 private:
-  QCanBusDevice * m_device = nullptr;
+  QCanBusDevice *m_device = nullptr;
   QTimer m_timer;
+  int m_speed = 20;
+  bool m_rising = false;
 };
 
 #endif

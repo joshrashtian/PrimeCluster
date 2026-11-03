@@ -2,6 +2,7 @@
 #include "clusterdata.h"
 #include "decode_functions.h"
 #include <QCanBus>
+#include <QDebug>
 
 CanReader::CanReader(ClusterData *cluster, QObject *parent)
     : BluetoothBaseClass(parent), m_cluster(cluster) {}
@@ -17,6 +18,7 @@ bool CanReader::start(const QString &plugin, const QString &interface) {
     return 0;
   } else {
     m_device->setParent(this);
+    qDebug() << "successfully connected device";
     connect(m_device, &QCanBusDevice::framesReceived, this,
             &CanReader::onFramesReceived);
     connect(m_device, &QCanBusDevice::errorOccurred, this,
@@ -28,6 +30,7 @@ bool CanReader::start(const QString &plugin, const QString &interface) {
 void CanReader::onFramesReceived() {
   while (m_device->framesAvailable()) {
     const QCanBusFrame frame = m_device->readFrame();
+ 
     // TODO - switch statement for all frames
     //
     // placeholder cases logged from https://github.com/appleguru/opendbc/blob/master/toyota_prius_2017_can1.dbc    

@@ -1,4 +1,5 @@
 #include "canreader.h"
+#include "cansimulator.h"
 #include "clusterdata.h"
 #include "clustersim-global.h"
 #include "decode_functions.h"
@@ -14,19 +15,15 @@ int main(int argc, char *argv[]) {
   ClusterData cluster;
 
   CanReader reader(&cluster);
-  if (!reader.start("virtualcan", "can0"))
-    qWarning() << "CAN failed to start: " << reader.error();
+  CanSimulator sim;
+    QQmlApplicationEngine engine;
 
-  QQmlApplicationEngine engine;
+qDebug() << "sim start:" << sim.start("virtualcan", "can0");
+qDebug() << "reader start:" << reader.start("virtualcan", "can0");
 
   engine.setInitialProperties({{"cluster", QVariant::fromValue(&cluster)}});
 
   engine.loadFromModule("Cluster", "Main");
-
-  cluster.setGear(ClusterData::GearDrive);
-  cluster.setSpeed(
-      PriusCan::decodeSpeed(QByteArray::fromHex("000000000028DD00")));
-  cluster.setMiles(67);
 
   if (engine.rootObjects().isEmpty())
     return -1;
