@@ -4,13 +4,14 @@ Item {
     id: nav
 
     property var tabs: ["Drive", "Media"]
+    property var tabIcons: ["\ue4fd", "\ue34a"]
     property int currentIndex: 0
     property string fontFamily
+    property string iconFontFamily
     property color activeColor: "black"
     property color inactiveColor: "#555555"
     property color accentColor: "royalblue"
     focus: true
-    signal clicked
     signal selected(int index)
 
     implicitWidth: content.implicitWidth
@@ -18,18 +19,18 @@ Item {
 
     function select(i) {
         if (i >= 0 && i < tabs.length && i !== currentIndex)
-            selected(i)
-      }
+            selected(i);
+    }
 
-      Keys.onPressed: (event) => {
-       
+    Keys.onPressed: event => {
         if (event.key === Qt.Key_Right) {
-          if(nav.currentIndex != 1) select(nav.currentIndex + 1);  event.accepted = true;
+            select(nav.currentIndex + 1);
+            event.accepted = true;
+        } else if (event.key === Qt.Key_Left) {
+            select(nav.currentIndex - 1);
+            event.accepted = true;
         }
-        if(event.key === Qt.Key_Left) {
-          if(nav.currentIndex != 0) select(nav.currentIndex - 1);  event.accepted = true;
-        }
-        }
+    }
 
     Row {
         id: content
@@ -41,7 +42,9 @@ Item {
             color: nav.activeColor
             opacity: nav.currentIndex > 0 ? 1 : 0.3
             anchors.verticalCenter: tabsRow.verticalCenter
-            TapHandler { onTapped: nav.select(nav.currentIndex - 1) }
+            TapHandler {
+                onTapped: nav.select(nav.currentIndex - 1)
+            }
         }
 
         Row {
@@ -52,21 +55,32 @@ Item {
                 id: tabRepeater
                 model: nav.tabs
 
-                Text {
+                Row {
                     required property string modelData
                     required property int index
                     readonly property bool active: index === nav.currentIndex
-
-                    text: modelData
-                    font.family: nav.fontFamily
-                    font.pixelSize: 16
-                    font.weight: active ? Font.Black : Font.DemiBold
-                    color: active ? nav.activeColor : nav.inactiveColor
+                    spacing: 8
                     bottomPadding: 12
 
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Text {
+                        text: nav.tabIcons[index]
+                        font.family: nav.iconFontFamily
+                        font.pixelSize: 18
+                        color: active ? nav.activeColor : nav.inactiveColor
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                    Text {
+                        text: modelData
+                        font.family: nav.fontFamily
+                        font.pixelSize: 16
+                        font.weight: active ? Font.Black : Font.DemiBold
+                        color: active ? nav.activeColor : nav.inactiveColor
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
 
-                    TapHandler { onTapped: nav.select(index) }
+                    TapHandler {
+                        onTapped: nav.select(index)
+                    }
                 }
             }
         }
@@ -77,10 +91,13 @@ Item {
             color: nav.activeColor
             opacity: nav.currentIndex < nav.tabs.length - 1 ? 1 : 0.3
             anchors.verticalCenter: tabsRow.verticalCenter
-            TapHandler { onTapped: nav.select(nav.currentIndex + 1) }
+            TapHandler {
+                onTapped: nav.select(nav.currentIndex + 1)
+            }
         }
-    }
+    }   // ← content closes here now
 
+    // Underline: a sibling of content, so the Row doesn't lay it out
     Rectangle {
         readonly property Item target: tabRepeater.count > nav.currentIndex
                                        ? tabRepeater.itemAt(nav.currentIndex) : null
@@ -93,7 +110,11 @@ Item {
         radius: 1.5
         color: nav.accentColor
 
-        Behavior on x { NumberAnimation { duration: 220; easing.type: Easing.OutCubic } }
-        Behavior on width { NumberAnimation { duration: 220; easing.type: Easing.OutCubic } }
+        Behavior on x {
+            NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+        }
+        Behavior on width {
+            NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+        }
     }
 }

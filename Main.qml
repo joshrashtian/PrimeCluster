@@ -26,6 +26,10 @@ Window {
         id: dmsans
         source: "./assets/fonts/DMSans.ttf"
     }
+    FontLoader {
+        id: lucide
+        source: "./assets/fonts/lucide.ttf"
+    }
 
     Background {
         anchors.fill: parent
@@ -72,16 +76,18 @@ Window {
         width: 840
         height: 5
         color: "royalblue"
-      }
+    }
 
-      ButtonSelect {
-        
+    ButtonSelect {
+
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 30
         anchors.horizontalCenter: parent.horizontalCenter
         tabs: ["Drive", "Music"]
+        tabIcons: ["\ue4fd", "\ue34a"]
+        iconFontFamily: lucide.font.family
         currentIndex: root.index
         fontFamily: dmsans.font.family
-        onSelected: (i) => root.index = i
-      }
+        onSelected: i => root.index = i
+    }
 }
