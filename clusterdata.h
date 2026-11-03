@@ -17,7 +17,8 @@ public:
     GearReverse,
     GearNeutral,
     GearDrive,
-    GearB
+    GearB,
+    GearUnknown
   };
   Q_ENUM(GearType);
 
