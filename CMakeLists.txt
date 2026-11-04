@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Bluetooth Quick SerialBus)
+find_package(Qt6 6.8.2 REQUIRED COMPONENTS Bluetooth Quick SerialBus)
 qt_standard_project_setup(REQUIRES 6.5)
 # c files
 qt_add_executable(prius-cluster main.cpp bluetoothbaseclass.cpp devicefinder.cpp clusterdata.cpp devicehandler.cpp deviceinfo.cpp canreader.cpp decode_functions.cpp cansimulator.cpp) 

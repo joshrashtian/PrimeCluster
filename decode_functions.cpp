@@ -16,7 +16,7 @@ int decodeSpeed(const QByteArray &payload) {
 }
 
 ClusterData::GearType decodeGear(const QByteArray &payload) {
- 
+
   int value = (static_cast<quint8>(payload[5]) >> 4) & 0x0F;
 
   switch (value) {
@@ -33,6 +33,21 @@ ClusterData::GearType decodeGear(const QByteArray &payload) {
   }
 
   return ClusterData::GearUnknown;
+}
+
+TurnSignals decodeTurnSignals(const QByteArray &payload) {
+  if (payload.size() < 4)
+    return {};
+  // 29|2@0+  -> byte 29/8 = 3, start bit 29%8 = 5 (MSB, big-endian)
+  //          -> 2 bits: bits 5..4, lowest bit = 5 - 2 + 1 = 4
+  //          -> shift right 4, mask 0x03; '+' = unsigned
+  int value = (static_cast<quint8>(payload[3]) >> 4) & 0x03;
+
+  TurnSignals s;
+  s.left = (value == 1);
+  s.right = (value == 2);
+
+  return s;
 }
 
 QByteArray encode_speed(int mph) {
@@ -60,19 +75,33 @@ QByteArray encode_gear(ClusterData::GearType raw) {
     value = 3;
     break;
   case ClusterData::GearB:
-    value = 4; break;
+    value = 4;
+    break;
   default:
-    value = -1; break;
+    value = -1;
+    break;
   }
 
   if (value == -1) {
     qWarning() << "Gear is Invalid";
-    return { };
+    return {};
   }
 
   QByteArray payload(8, 0);
 
   payload[5] = value << 4;
+  return payload;
+}
+
+QByteArray encodeTurnSignals(const TurnSignals s) {
+  int value = 3;
+  if (s.left)
+    value = 1;
+  if (s.right)
+    value = 2;
+
+  QByteArray payload(8, 0);
+  payload[3] = value << 4;
   return payload;
 }
 } // namespace PriusCan

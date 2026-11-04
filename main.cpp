@@ -20,11 +20,14 @@ int main(int argc, char *argv[]) {
   CanReader reader(&cluster);
 
   // conditionals for rendering
-  bool simulateMode = 0;
+  bool simulateMode = false;
+  bool lowPerformance = false;
 
   for (int i = 1; i < argc; ++i) {
     if (strcmp(argv[i], "--simulate") == 0)
       simulateMode = true;
+    if(strcmp(argv[i], "--low-performance") == 0) 
+      lowPerformance = true;
   }
 
   if (simulateMode) {

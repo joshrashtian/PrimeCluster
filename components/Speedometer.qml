@@ -5,6 +5,7 @@ Row {
   id: speedometer
     required property ClusterData cluster
     property string fontFamily
+    property string textColor
 
     Text {
         id: speedText
@@ -15,7 +16,7 @@ Row {
         font.variableAxes: {
             "wght": 900
         }
-        color: "black"
+        color: speedometer.textColor
     }
     Text {
         text: "mph"

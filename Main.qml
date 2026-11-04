@@ -5,43 +5,48 @@ Window {
     width: 1080
     height: 640
     visible: true
-    color: "white"
+    color: theme.bgBottom
     title: "Prius Cluster"
 
     required property ClusterData cluster
+    property bool darkMode: true
+    property int index: 0
 
-    FontLoader {
-        id: geist_bold
-        source: "./assets/fonts/GeistMonoBold.otf"
+    QtObject {
+        id: theme
+        readonly property color bgTop:     root.darkMode ? "#14171c" : "#ffffff"
+        readonly property color bgMid:     root.darkMode ? "#0b0d10" : "#cccccc"
+        readonly property color bgBottom:  root.darkMode ? "darkblue" : "#ccdddd"
+        readonly property color text:      root.darkMode ? "#f2f4f7" : "black"
+        readonly property color textDim:   root.darkMode ? "#5c6470" : "#555555"
+        readonly property color speed:     root.darkMode ? "#e6e9ee" : "gray"
+        readonly property color accent:    root.darkMode ? "#5b8cff" : "royalblue"
     }
-    FontLoader {
-        id: clash
-        source: "./assets/fonts/ClashDisplay-Variable.ttf"
-    }
-    FontLoader {
-        id: nippo
-        source: "./assets/fonts/Nippo.ttf"
-    }
-    FontLoader {
-        id: dmsans
-        source: "./assets/fonts/DMSans.ttf"
-    }
-    FontLoader {
-        id: lucide
-        source: "./assets/fonts/lucide.ttf"
+
+    FontLoader { id: geist_bold; source: "./assets/fonts/GeistMonoBold.otf" }
+    FontLoader { id: clash;      source: "./assets/fonts/ClashDisplay-Variable.ttf" }
+    FontLoader { id: nippo;      source: "./assets/fonts/Nippo.ttf" }
+    FontLoader { id: dmsans;     source: "./assets/fonts/DMSans.ttf" }
+    FontLoader { id: lucide;     source: "./assets/fonts/lucide.ttf" }
+
+    Shortcut {
+        sequence: "N"
+        onActivated: root.darkMode = !root.darkMode
     }
 
     Background {
         anchors.fill: parent
-        topColor: "#ffffff"
-        midColor: "#cccccc"
-        bottomColor: "#ccdddd"
+        topColor: theme.bgTop
+        midColor: theme.bgMid
+        bottomColor: theme.bgBottom
     }
 
     Header {
         cluster: root.cluster
         fontFamily: nippo.font.family
         rangeFontFamily: clash.font.family
+        textColor: theme.text
+        dimColor: theme.textDim
         anchors {
             left: parent.left
             right: parent.right
@@ -50,21 +55,19 @@ Window {
         }
     }
 
-    property int index: 0
-
     // all the different pages
     Loader {
-        active: index === 0
+        active: root.index === 0
+        anchors.centerIn: parent
         sourceComponent: Speedometer {
             fontFamily: dmsans.font.family
             cluster: root.cluster
+            textColor: theme.speed
         }
-
-        anchors.centerIn: parent
     }
 
     Loader {
-        active: index === 1
+        active: root.index === 1
         sourceComponent: Music {}
     }
 
@@ -75,19 +78,24 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 840
         height: 5
-        color: "royalblue"
+        radius: 2.5
+        color: theme.accent
     }
 
     ButtonSelect {
-
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 30
         anchors.horizontalCenter: parent.horizontalCenter
         tabs: ["Drive", "Music"]
         tabIcons: ["\ue4fd", "\ue34a"]
         iconFontFamily: lucide.font.family
-        currentIndex: root.index
         fontFamily: dmsans.font.family
+        activeColor: theme.text
+        inactiveColor: theme.textDim
+        accentColor: theme.accent
+        currentIndex: root.index
         onSelected: i => root.index = i
-    }
+      }
+
+      
 }

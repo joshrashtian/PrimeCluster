@@ -8,6 +8,9 @@ Item {
     property string fontFamily
     property string rangeFontFamily
 
+    property color dimColor: "#555555"
+    property color textColor: "black"
+
     height: gears.height
 
     Row {
@@ -44,7 +47,7 @@ Item {
                 readonly property bool active: header.cluster.gear === modelData.gear
 
                 text: modelData.label
-                color: active ? "black" : "#555555"
+                color: active ? header.textColr : header.dimColor
                 font.family: header.fontFamily
                 font.pixelSize: 30
                 font.italic: true
@@ -73,7 +76,9 @@ Item {
             running: true
             repeat: true
             onTriggered: clock.update()
-        }
+          }
+
+          color: header.textColor
     }
 
     Text {
@@ -85,6 +90,7 @@ Item {
         font.pixelSize: 30
         font.variableAxes: {
             "wght": 900
-        }
+          }
+          color: header.textColor
     }
 }

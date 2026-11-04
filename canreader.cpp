@@ -42,6 +42,8 @@ void CanReader::onFramesReceived() {
     case 0x127:
       m_cluster->setGear(PriusCan::decodeGear(frame.payload()));
       break;
+    case 0x614:
+      //turn signals
     default:
       break; // hundreds of other IDs we don't care about (yet)
     }

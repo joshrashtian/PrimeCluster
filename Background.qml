@@ -22,4 +22,20 @@ Rectangle {
             color: root.bottomColor
         }
     }
+
+    Behavior on topColor {
+        ColorAnimation {
+            duration: 400
+        }
+    }
+    Behavior on midColor {
+        ColorAnimation {
+            duration: 400
+        }
+    }
+    Behavior on bottomColor {
+        ColorAnimation {
+            duration: 400
+        }
+    }
 }
