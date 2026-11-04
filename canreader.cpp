@@ -30,11 +30,14 @@ bool CanReader::start(const QString &plugin, const QString &interface) {
 void CanReader::onFramesReceived() {
   while (m_device->framesAvailable()) {
     const QCanBusFrame frame = m_device->readFrame();
- 
+
     // TODO - switch statement for all frames
     //
-    // placeholder cases logged from https://github.com/appleguru/opendbc/blob/master/toyota_prius_2017_can1.dbc    
+    // placeholder cases logged from
+    // https://github.com/appleguru/opendbc/blob/master/toyota_prius_2017_can1.dbc
     // with help from https://github.com/commaai/opendbc/tree/master/opendbc
+    if (frame.frameType() != QCanBusFrame::DataFrame)
+      continue;
     switch (frame.frameId()) {
     case 0xB4:
       m_cluster->setSpeed(PriusCan::decodeSpeed(frame.payload()));
@@ -43,11 +46,17 @@ void CanReader::onFramesReceived() {
       m_cluster->setGear(PriusCan::decodeGear(frame.payload()));
       break;
     case 0x614:
-      //turn signals
+      m_cluster->setTurnSignals(PriusCan::decodeTurnSignals(frame.payload()));
+      break;
     default:
       break; // hundreds of other IDs we don't care about (yet)
     }
   }
 }
 
-void CanReader::onErrorOccurred(QCanBusDevice::CanBusError error) {}
+void CanReader::onErrorOccurred(QCanBusDevice::CanBusError error) {
+  Q_UNUSED(error);
+  qWarning() << "CAN error:" << m_device->errorString();
+  setError(m_device->errorString());
+  setIcon(IconError);
+}
