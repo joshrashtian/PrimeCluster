@@ -6,7 +6,9 @@ Item {
     id: speedometer
 
     required property ClusterData cluster
-property string fontFamily
+
+    property string fontFamily
+    property string turnSignalFamily
     property color textColor: "white"
     property color unitColor: "gray"
     property color trackColor: "#2a2f38"
@@ -21,8 +23,9 @@ property string fontFamily
         }
     }
 
-    width: 400
-    height: 400
+  width: 420
+    height: 420
+
 
     Shape {
         anchors.fill: parent
@@ -64,6 +67,7 @@ property string fontFamily
     Column {
         anchors.centerIn: parent
         spacing: -40
+        id: readout
 
         Text {
             id: speedText
@@ -91,5 +95,12 @@ property string fontFamily
             }
             color: speedometer.unitColor
         }
-    }
+      }
+      TurnSignals {
+            cluster: speedometer.cluster
+            iconFamily: speedometer.turnSignalFamily
+            anchors.centerIn: parent
+            width: speedometer.width + 150
+        }
+
 }

@@ -4,12 +4,16 @@
 #include <QObject>
 #include <QQmlEngine>
 #include <QString>
+
+#include "turnsignals.h"
 class ClusterData : public QObject {
   Q_OBJECT
 
   Q_PROPERTY(GearType gear READ gear WRITE setGear NOTIFY gearChanged);
   Q_PROPERTY(int speed READ speed WRITE setSpeed NOTIFY speedChanged);
   Q_PROPERTY(int miles READ miles WRITE setMiles NOTIFY milesChanged);
+ Q_PROPERTY(TurnSignals turnSignals READ turnSignals NOTIFY turnSignalsChanged)
+
   QML_ELEMENT;
 public:
   enum GearType : int {
@@ -34,15 +38,19 @@ public:
   void setMiles(const int &miles);
   void resetData();
 
+  TurnSignals turnSignals() const;
+  void setTurnSignals(const TurnSignals &turn);
+
 signals:
   void gearChanged();
   void speedChanged();
   void milesChanged();
-
+  void turnSignalsChanged();
 
 private:
   int m_speed = 0;
   int m_miles = 400;
+  TurnSignals m_signals;
   GearType m_gear = GearParking;
 };
 

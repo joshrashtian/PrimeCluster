@@ -3,11 +3,7 @@
 
 #include "clusterdata.h"
 #include <QByteArray>
-
-struct TurnSignals {
-  bool left = false;
-  bool right = false;
-};
+#include "turnsignals.h"
 
 namespace PriusCan {
 

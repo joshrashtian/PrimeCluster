@@ -79,6 +79,7 @@ Window {
             cluster: root.cluster
             textColor: theme.speed
             unitColor: theme.textDim
+            turnSignalFamily: lucide.font.family
         }
     }
 
