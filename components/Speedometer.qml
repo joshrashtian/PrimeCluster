@@ -15,7 +15,7 @@ Row {
         font.variableAxes: {
             "wght": 900
         }
-        color: "gray"
+        color: "black"
     }
     Text {
         text: "mph"

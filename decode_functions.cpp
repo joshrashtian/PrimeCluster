@@ -5,7 +5,7 @@
 
 namespace PriusCan {
 int decodeSpeed(const QByteArray &payload) {
-  qDebug() << payload.toHex(' ');
+
   int i = static_cast<quint8>(payload[5]);
   int j = static_cast<quint8>(payload[6]);
 
@@ -16,7 +16,7 @@ int decodeSpeed(const QByteArray &payload) {
 }
 
 ClusterData::GearType decodeGear(const QByteArray &payload) {
-  qDebug() << payload.toHex(' ');
+ 
   int value = (static_cast<quint8>(payload[5]) >> 4) & 0x0F;
 
   switch (value) {

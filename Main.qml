@@ -56,7 +56,7 @@ Window {
     Loader {
         active: index === 0
         sourceComponent: Speedometer {
-            fontFamily: nippo.font.family
+            fontFamily: dmsans.font.family
             cluster: root.cluster
         }
 
