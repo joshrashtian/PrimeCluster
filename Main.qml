@@ -14,20 +14,35 @@ Window {
 
     QtObject {
         id: theme
-        readonly property color bgTop:     root.darkMode ? "#14171c" : "#ffffff"
-        readonly property color bgMid:     root.darkMode ? "#0b0d10" : "#cccccc"
-        readonly property color bgBottom:  root.darkMode ? "darkblue" : "#ccdddd"
-        readonly property color text:      root.darkMode ? "#f2f4f7" : "black"
-        readonly property color textDim:   root.darkMode ? "#5c6470" : "#555555"
-        readonly property color speed:     root.darkMode ? "#e6e9ee" : "gray"
-        readonly property color accent:    root.darkMode ? "#5b8cff" : "royalblue"
+        readonly property color bgTop: root.darkMode ? "#14171c" : "#ffffff"
+        readonly property color bgMid: root.darkMode ? "#0b0d10" : "#cccccc"
+        readonly property color bgBottom: root.darkMode ? "darkblue" : "#ccdddd"
+        readonly property color text: root.darkMode ? "#f2f4f7" : "black"
+        readonly property color textDim: root.darkMode ? "#5c6470" : "#555555"
+        readonly property color speed: root.darkMode ? "#e6e9ee" : "gray"
+        readonly property color accent: root.darkMode ? "#5b8cff" : "royalblue"
     }
 
-    FontLoader { id: geist_bold; source: "./assets/fonts/GeistMonoBold.otf" }
-    FontLoader { id: clash;      source: "./assets/fonts/ClashDisplay-Variable.ttf" }
-    FontLoader { id: nippo;      source: "./assets/fonts/Nippo.ttf" }
-    FontLoader { id: dmsans;     source: "./assets/fonts/DMSans.ttf" }
-    FontLoader { id: lucide;     source: "./assets/fonts/lucide.ttf" }
+    FontLoader {
+        id: geist_bold
+        source: "./assets/fonts/GeistMonoBold.otf"
+    }
+    FontLoader {
+        id: clash
+        source: "./assets/fonts/ClashDisplay-Variable.ttf"
+    }
+    FontLoader {
+        id: nippo
+        source: "./assets/fonts/Nippo.ttf"
+    }
+    FontLoader {
+        id: dmsans
+        source: "./assets/fonts/DMSans.ttf"
+    }
+    FontLoader {
+        id: lucide
+        source: "./assets/fonts/lucide.ttf"
+    }
 
     Shortcut {
         sequence: "N"
@@ -63,6 +78,7 @@ Window {
             fontFamily: dmsans.font.family
             cluster: root.cluster
             textColor: theme.speed
+            unitColor: theme.textDim
         }
     }
 
@@ -71,15 +87,14 @@ Window {
         sourceComponent: Music {}
     }
 
-    Rectangle {
-        id: bottomSpeed
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 100
+    Gears {
         anchors.horizontalCenter: parent.horizontalCenter
-        width: 840
-        height: 5
-        radius: 2.5
-        color: theme.accent
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 80
+        cluster: root.cluster
+        fontFamily: nippo.font.family
+        textColor: theme.text
+        dimColor: theme.textDim
     }
 
     ButtonSelect {
@@ -95,7 +110,5 @@ Window {
         accentColor: theme.accent
         currentIndex: root.index
         onSelected: i => root.index = i
-      }
-
-      
+    }
 }
