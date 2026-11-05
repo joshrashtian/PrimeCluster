@@ -2,22 +2,23 @@
 #define DECODE_FUNCTIONS
 
 #include "clusterdata.h"
-#include <QByteArray>
 #include "turnsignals.h"
+#include <QByteArray>
 
 namespace PriusCan {
 
-//decoding
+// decoding
 int decodeSpeed(const QByteArray &payload);
 ClusterData::GearType decodeGear(const QByteArray &payload);
 TurnSignals decodeTurnSignals(const QByteArray &payload);
 
-//encoding
+// encoding
 QByteArray encode_speed(int raw);
 QByteArray encode_gear(ClusterData::GearType raw);
 QByteArray encodeTurnSignals(TurnSignals s);
 
-//other
+// other
+int decodeObdSpeed(const QByteArray &payload);
 QByteArray buildPidRequest(quint8 pid);
 } // namespace PriusCan
 
