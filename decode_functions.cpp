@@ -104,6 +104,13 @@ QByteArray encodeTurnSignals(const TurnSignals s) {
   payload[3] = value << 4;
   return payload;
 }
+
+int decodeObdSpeed(const QByteArray &payload)
+{
+    int kph = static_cast<quint8>(payload[3]);
+    return qRound(kph * 0.621371);
+}
+
 QByteArray buildPidRequest(quint8 pid)
 {
     QByteArray payload(8, 0);
