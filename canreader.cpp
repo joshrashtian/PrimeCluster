@@ -3,7 +3,8 @@
 #include "decode_functions.h"
 #include <QCanBus>
 #include <QDebug>
-
+#include <QDir>
+#include <QDateTime>
 CanReader::CanReader(ClusterData *cluster, QObject *parent)
     : BluetoothBaseClass(parent), m_cluster(cluster) {}
 
@@ -23,6 +24,11 @@ bool CanReader::start(const QString &plugin, const QString &interface) {
             &CanReader::onFramesReceived);
     connect(m_device, &QCanBusDevice::errorOccurred, this,
             &CanReader::onErrorOccurred);
+    m_logFile.setFileName(QDir::homePath() + "/can_unknown.log");
+    if (m_logFile.open(QIODevice::Append | QIODevice::Text))
+      m_log.setDevice(&m_logFile);
+    else
+      qWarning() << "Could not open CAN log:" << m_logFile.errorString();
     return m_device->connectDevice();
   }
 }
@@ -49,7 +55,16 @@ void CanReader::onFramesReceived() {
       m_cluster->setTurnSignals(PriusCan::decodeTurnSignals(frame.payload()));
       break;
     default:
-      break; // hundreds of other IDs we don't care about (yet)
+      const quint32 id = frame.frameId();
+      const QByteArray data = frame.payload();
+      if (m_lastPayload.value(id) != data) {
+        m_lastPayload[id] = data;
+        m_log << QDateTime::currentDateTime().toString(Qt::ISODateWithMs) << " "
+              << QString::number(id, 16).toUpper() << " " << data.toHex(' ')
+              << "\n";
+        m_log.flush();
+      }
+      break;
     }
   }
 }

@@ -14,13 +14,13 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "gray"
-        border.color: "#66000000"
+        radius: 14
+        color: "#14ffffff"
+        border.color: "#26ffffff"
+        border.width: 1
+      }
 
-        border.width: 2
-        radius: 10
-        opacity: 0.5
-    }
+
     Row {
         id: row
         spacing: 1

@@ -3,14 +3,14 @@
 
 #include "bluetoothbaseclass.h"
 #include <QCanBusDevice>
+#include <QFile>
 #include <QObject>
-
 class ClusterData;
 
 class CanReader : public BluetoothBaseClass {
   Q_OBJECT
 
-   QML_ELEMENT
+  QML_ELEMENT
   QML_UNCREATABLE("CanReader is not intended to be created directly")
 
 public:
@@ -24,6 +24,9 @@ private slots:
 private:
   ClusterData *m_cluster = nullptr;
   QCanBusDevice *m_device = nullptr;
+  QFile m_logFile;
+  QTextStream m_log;
+  QHash<quint32, QByteArray> m_lastPayload;
 };
 
 #endif

@@ -60,6 +60,7 @@ Window {
         cluster: root.cluster
         fontFamily: nippo.font.family
         rangeFontFamily: clash.font.family
+        iconFontFamily: lucide.font.family
         textColor: theme.text
         dimColor: theme.textDim
         anchors {
@@ -93,8 +94,9 @@ Window {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 80
         cluster: root.cluster
-        fontFamily: nippo.font.family
+        fontFamily: dmsans.font.family
         textColor: theme.text
+        
         dimColor: theme.textDim
     }
 

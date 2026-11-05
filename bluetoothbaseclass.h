@@ -1,3 +1,6 @@
+// Copyright (C) 2022 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
+// Modified by Joshua Rashtian for the Prius Cluster project.
 // hippity hoppity QtCode is now my property :)))
 #ifndef BLUETOOTHBASECLASS_H
 #define BLUETOOTHBASECLASS_H
