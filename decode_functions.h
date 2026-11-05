@@ -16,6 +16,9 @@ TurnSignals decodeTurnSignals(const QByteArray &payload);
 QByteArray encode_speed(int raw);
 QByteArray encode_gear(ClusterData::GearType raw);
 QByteArray encodeTurnSignals(TurnSignals s);
+
+//other
+QByteArray buildPidRequest(quint8 pid);
 } // namespace PriusCan
 
 #endif // !DECODE_FUNCTIONS

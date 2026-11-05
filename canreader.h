@@ -4,6 +4,7 @@
 #include "bluetoothbaseclass.h"
 #include <QCanBusDevice>
 #include <QFile>
+#include <QTimer>
 #include <QObject>
 class ClusterData;
 
@@ -20,6 +21,7 @@ public:
 private slots:
   void onFramesReceived();
   void onErrorOccurred(QCanBusDevice::CanBusError error);
+  void poll();
 
 private:
   ClusterData *m_cluster = nullptr;
@@ -27,6 +29,8 @@ private:
   QFile m_logFile;
   QTextStream m_log;
   QHash<quint32, QByteArray> m_lastPayload;
+  void handleObdReply(const QByteArray &payload);
+  QTimer m_pollTimer;
 };
 
 #endif

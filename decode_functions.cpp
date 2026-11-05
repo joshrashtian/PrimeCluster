@@ -104,4 +104,13 @@ QByteArray encodeTurnSignals(const TurnSignals s) {
   payload[3] = value << 4;
   return payload;
 }
+QByteArray buildPidRequest(quint8 pid)
+{
+    QByteArray payload(8, 0);
+    payload[0] = 0x02;   // 2 bytes follow
+    payload[1] = 0x01;   // mode 01: current data
+    payload[2] = pid;
+    return payload;
+}
+
 } // namespace PriusCan
