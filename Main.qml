@@ -76,7 +76,8 @@ Window {
         active: root.index === 0
         anchors.centerIn: parent
         sourceComponent: Speedometer {
-            fontFamily: dmsans.font.family
+          fontFamily: dmsans.font.family
+          inCircleFontFamily: nippo.font.family
             cluster: root.cluster
             textColor: theme.speed
             unitColor: theme.textDim
@@ -88,7 +89,7 @@ Window {
         active: root.index === 1
         sourceComponent: Music {}
     }
-
+/*
     Gears {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
@@ -99,6 +100,7 @@ Window {
         
         dimColor: theme.textDim
     }
+    */
 
     ButtonSelect {
         anchors.bottom: parent.bottom
@@ -108,6 +110,7 @@ Window {
         tabIcons: ["\ue4fd", "\ue34a"]
         iconFontFamily: lucide.font.family
         fontFamily: dmsans.font.family
+
         activeColor: theme.text
         inactiveColor: theme.textDim
         accentColor: theme.accent

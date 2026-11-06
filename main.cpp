@@ -5,7 +5,9 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QString>
 #include <cstring>
+
 bool simulator = false;
 
 int main(int argc, char *argv[]) {
@@ -22,12 +24,18 @@ int main(int argc, char *argv[]) {
   // conditionals for rendering
   bool simulateMode = false;
   bool lowPerformance = false;
+  bool map = true;
 
+  QString socket = "vcan0";
   for (int i = 1; i < argc; ++i) {
     if (strcmp(argv[i], "--simulate") == 0)
       simulateMode = true;
-    if(strcmp(argv[i], "--low-performance") == 0) 
+    if (strcmp(argv[i], "--low-performance") == 0)
       lowPerformance = true;
+    if (strcmp(argv[i], "--disable-map") == 0)
+      map = false;
+    if (strcmp(argv[i], "--socket") == 0 && i + 1 < argc)
+      socket = argv[++i];
   }
 
   if (simulateMode) {
@@ -36,7 +44,7 @@ int main(int argc, char *argv[]) {
     qDebug() << "sim start:" << sim->start("virtualcan", "can0");
 
   } else {
-    qDebug() << "reader start: " << reader.start("socketcan", "vcan0");
+    qDebug() << "reader start: " << reader.start("socketcan", socket);
   }
   engine.setInitialProperties({{"cluster", QVariant::fromValue(&cluster)}});
 

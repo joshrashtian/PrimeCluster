@@ -26,8 +26,8 @@ Item {
 
     Text {
         id: clock
-        font.family: header.fontFamily
-        font.pixelSize: 30
+        font.family: header.rangeFontFamily
+        font.pixelSize: 20
 
         anchors.horizontalCenter: parent.horizontalCenter
 
