@@ -6,7 +6,7 @@ set(QT_QML_GENERATE_QMLLS_INI ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Bluetooth Quick SerialBus)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Bluetooth Quick SerialBus DBus)
 qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(prius-cluster
@@ -19,6 +19,7 @@ qt_add_executable(prius-cluster
     decode_functions.h decode_functions.cpp
     bluetooth/mediadata.h bluetooth/mediadata.cpp
     bluetooth/ios/amsclient.h bluetooth/ios/amsclient.cpp
+       bluetooth/phonelink.h bluetooth/phonelink.cpp
 )
 
 target_include_directories(prius-cluster PRIVATE
@@ -46,4 +47,4 @@ qt_add_qml_module(prius-cluster
         assets/fonts/lucide.ttf
 )
 
-target_link_libraries(prius-cluster PRIVATE Qt6::Quick Qt6::Bluetooth Qt6::SerialBus)
+target_link_libraries(prius-cluster PRIVATE Qt6::Quick Qt6::Bluetooth Qt6::SerialBus Qt6::DBus)

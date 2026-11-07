@@ -76,8 +76,8 @@ Window {
         active: root.index === 0
         anchors.centerIn: parent
         sourceComponent: Speedometer {
-          fontFamily: dmsans.font.family
-          inCircleFontFamily: nippo.font.family
+            fontFamily: dmsans.font.family
+            inCircleFontFamily: nippo.font.family
             cluster: root.cluster
             textColor: theme.speed
             unitColor: theme.textDim
@@ -86,10 +86,58 @@ Window {
     }
 
     Loader {
+        active: root.index === 0
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.rightMargin: 80
+        sourceComponent: Column {
+
+            Rectangle {
+                color: "darkgrey"
+                width: 128
+                height: 128
+                radius: 100
+
+                Text {
+                    anchors.centerIn: parent
+                    font.family: lucide.font.family
+                    font.pixelSize: 48
+                    color: "white"
+                    text: "\ue122"   // music glyph, replace with the real codepoint
+                }
+            }
+            Text {
+                text: "Wasting Angels (feat. The Kid Laroi)"
+                color: "white"
+                font.pixelSize: 22
+                font.variableAxes: {
+                  "wght": 900
+                 }
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.family: dmsans.font.family
+                topPadding: 8
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+                width: parent.width
+            }
+            Text {
+                text: "Don Toliver"
+                color: "#b0b8c8"
+                font.pixelSize: 18
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+                font.family: dmsans.font.family
+                width: parent.width
+            }
+        }
+    }
+
+    Loader {
         active: root.index === 1
         sourceComponent: Music {}
     }
-/*
+    /*
     Gears {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
@@ -97,7 +145,7 @@ Window {
         cluster: root.cluster
         fontFamily: dmsans.font.family
         textColor: theme.text
-        
+
         dimColor: theme.textDim
     }
     */
