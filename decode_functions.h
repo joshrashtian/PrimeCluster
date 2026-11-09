@@ -16,6 +16,12 @@ TurnSignals decodeTurnSignals(const QByteArray &payload);
 QByteArray encode_speed(int raw);
 QByteArray encode_gear(ClusterData::GearType raw);
 QByteArray encodeTurnSignals(TurnSignals s);
+QByteArray buildMode21Request(quint8 pid);
+QByteArray buildMode22Request(quint16 did);
+
+double decodeFuelLiters(const QByteArray &p);
+int decodeBatterySoc(const QByteArray &p);
+int decodeOutsideTemp(const QByteArray &p);
 
 // other
 int decodeObdSpeed(const QByteArray &payload);

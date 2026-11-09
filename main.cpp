@@ -2,6 +2,7 @@
 #include "cansimulator.h"
 #include "clusterdata.h"
 #include "clustersim-global.h"
+#include "mediadata.h"
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -16,6 +17,7 @@ int main(int argc, char *argv[]) {
 
   // bank for all our values
   ClusterData cluster;
+  MediaData mediadata;
   // qt qml app engine to run the app itself
   QQmlApplicationEngine engine;
   // can it read values?
@@ -46,7 +48,8 @@ int main(int argc, char *argv[]) {
   } else {
     qDebug() << "reader start: " << reader.start("socketcan", socket);
   }
-  engine.setInitialProperties({{"cluster", QVariant::fromValue(&cluster)}});
+  engine.setInitialProperties({{"cluster", QVariant::fromValue(&cluster)},
+                               {"media", QVariant::fromValue(&mediadata)}});
 
   engine.loadFromModule("Cluster", "Main");
 

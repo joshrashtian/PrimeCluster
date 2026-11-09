@@ -67,11 +67,11 @@ signals:
     void artChanged();
 
 private:
-    QString m_title;
-    QString m_artist;
-    QString m_album;
+    QString m_title = "Umbrella (feat. Jay-Z)";
+    QString m_artist = "Rihanna";
+    QString m_album = "Good Girl Gone Bad";
     QString m_appName;
-    double m_duration = 0.0;
+    double m_duration = 276.0;
     double m_elapsed = 0.0;
     bool m_playing = false;
     AlbumArt m_art;

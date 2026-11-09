@@ -9,6 +9,7 @@ Window {
     title: "Prius Cluster"
 
     required property ClusterData cluster
+    required property MediaData media
     property bool darkMode: true
     property int index: 0
 
@@ -134,8 +135,12 @@ Window {
     }
 
     Loader {
-        active: root.index === 1
-        sourceComponent: Music {}
+      active: root.index === 1
+      id: pageLoader
+      anchors.fill: parent
+        sourceComponent: Music {
+          media: root.media
+        }
     }
     /*
     Gears {

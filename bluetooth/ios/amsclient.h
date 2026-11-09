@@ -2,36 +2,40 @@
 #define AMSCLIENT_H
 
 #include "bluetoothbaseclass.h"
-#include <QFile>
-#include <QLowEnergyController>
-#include <QLowEnergyService>
+#include "mediadata.h"
+#include <QByteArray>
 #include <QObject>
-
-class MediaData;
+#include <QQmlEngine>
+#include <QString>
+#include <QStringList>
+#include <QVariantMap>
 
 class AMSClient : public BluetoothBaseClass {
   Q_OBJECT
-
   QML_ELEMENT
-  QML_UNCREATABLE("AMSClient is not intended to be created directly")
+  QML_UNCREATABLE("Created in C++")
 
 public:
-  explicit AMSClient(MediaData *media, QObject *parent = nullptr);
-  bool start();
-  Q_INVOKABLE void sendCommand(int commandId);
+  AMSClient(MediaData *media, const QString &devicePath,
+            QObject *parent = nullptr);
 
-private slots:
-  void onConnected();
-  void onDisconnected();
-  void onServiceDiscovered(const QBluetoothUuid &uuid);
-  void onServiceStateChanged(QLowEnergyService::ServiceState state);
-  void onCharacteristicChanged(const QLowEnergyCharacteristic &c,
-                               const QByteArray &value);
+  Q_INVOKABLE void sendCommand(int command);
+
+public slots:
+  bool start();
+  void onCharacteristicChanged(const QString &interface,
+                               const QVariantMap &changed,
+                               const QStringList &invalidated);
 
 private:
+  bool findCharacteristics();
+  void writeValue(const QString &path, const QByteArray &value);
+
   MediaData *m_media = nullptr;
-  QLowEnergyController *m_controller = nullptr;
-  QLowEnergyService *m_service = nullptr;
+  QString m_devicePath;
+  QString m_remoteCommandPath;
+  QString m_entityUpdatePath;
+  QString m_entityAttributePath;
 };
 
 #endif

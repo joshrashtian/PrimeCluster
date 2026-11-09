@@ -50,6 +50,33 @@ TurnSignals decodeTurnSignals(const QByteArray &payload) {
   return s;
 }
 
+QByteArray buildMode21Request(quint8 pid) {
+  QByteArray p(8, 0);
+  p[0] = 0x02;
+  p[1] = 0x21;
+  p[2] = pid;
+  return p;
+}
+
+QByteArray buildMode22Request(quint16 did) {
+  QByteArray p(8, 0);
+  p[0] = 0x03;
+  p[1] = 0x22;
+  p[2] = (did >> 8) & 0xFF;
+  p[3] = did & 0xFF;
+  return p;
+}
+
+double decodeFuelLiters(const QByteArray &p) {
+  return static_cast<quint8>(p[3]) / 2.0;
+}
+int decodeBatterySoc(const QByteArray &p) {
+  return qRound(static_cast<quint8>(p[4]) * 100.0 / 255.0);
+}
+int decodeOutsideTemp(const QByteArray &p) {
+  return static_cast<quint8>(p[3]) - 40;
+}
+
 QByteArray encode_speed(int mph) {
   QByteArray payload(8, 0);
   int raw = qRound((mph / 0.621371) / 0.01);
@@ -105,19 +132,17 @@ QByteArray encodeTurnSignals(const TurnSignals s) {
   return payload;
 }
 
-int decodeObdSpeed(const QByteArray &payload)
-{
-    int kph = static_cast<quint8>(payload[3]);
-    return qRound(kph * 0.621371);
+int decodeObdSpeed(const QByteArray &payload) {
+  int kph = static_cast<quint8>(payload[3]);
+  return qRound(kph * 0.621371);
 }
 
-QByteArray buildPidRequest(quint8 pid)
-{
-    QByteArray payload(8, 0);
-    payload[0] = 0x02;   // 2 bytes follow
-    payload[1] = 0x01;   // mode 01: current data
-    payload[2] = pid;
-    return payload;
+QByteArray buildPidRequest(quint8 pid) {
+  QByteArray payload(8, 0);
+  payload[0] = 0x02; // 2 bytes follow
+  payload[1] = 0x01; // mode 01: current data
+  payload[2] = pid;
+  return payload;
 }
 
 } // namespace PriusCan
