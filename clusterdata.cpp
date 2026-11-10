@@ -59,6 +59,12 @@ void ClusterData::setBatterySoc(int percent) {
   emit batterySocChanged();
 }
 
+int ClusterData::rangeMiles() const {
+  if (m_fuelLiters < 0)
+    return -1;
+  return qRound(m_fuelLiters / kLitersPerGallon * kMpg);
+}
+
 void ClusterData::resetData() {
   setSpeed(0);
   setGear(GearParking);

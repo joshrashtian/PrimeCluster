@@ -47,11 +47,10 @@ Item {
         color: header.textColor
     }
 
-    
     Text {
         anchors.right: parent.right
 
-        text: header.cluster.miles + "mi"
+        text: header.cluster.rangeMiles < 0 ? "--" : header.cluster.rangeMiles + "mi"
         font.family: header.rangeFontFamily
         font.pixelSize: 30
         font.variableAxes: {

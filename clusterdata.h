@@ -17,8 +17,10 @@ class ClusterData : public QObject {
   Q_PROPERTY(double fuelLiters READ fuelLiters NOTIFY fuelLitersChanged)
   Q_PROPERTY(int fuelPercent READ fuelPercent NOTIFY fuelLitersChanged)
   Q_PROPERTY(int batterySoc READ batterySoc NOTIFY batterySocChanged)
+  Q_PROPERTY(int rangeMiles READ rangeMiles NOTIFY fuelLitersChanged)
 
   QML_ELEMENT;
+  QML_UNCREATABLE("C++")
 
 public:
   enum GearType : int {
@@ -54,6 +56,7 @@ public:
   void setOutsideTemp(int celsius);
   void setFuelLiters(double liters);
   void setBatterySoc(int percent);
+  int rangeMiles() const;
 
 signals:
   void gearChanged();
@@ -71,6 +74,8 @@ private:
   GearType m_gear = GearParking;
   static constexpr double kTankLiters = 36.0;
   int m_outsideTemp = 0;
+  static constexpr double kLitersPerGallon = 3.78541;
+  static constexpr double kMpg = 50.0;
   double m_fuelLiters = 0.0;
   int m_batterySoc = 0;
 };
